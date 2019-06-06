@@ -4,10 +4,8 @@ WIDTH = 1360
 HEIGHT = 710
 
 current_screen = "menu"
-spaceship_x = HEIGHT / 2
-spaceship_y = 300
-spaceship_radius = 200
-spaceship_color = arcade.color.RED
+spaceship_x = 355
+spaceship_y = 100
 press_up = False
 press_down = False
 press_left = False
@@ -66,8 +64,7 @@ def on_draw():
     elif current_screen == "play":
         arcade.draw_text("Play Screen", 50, HEIGHT - 50, arcade.color.WHITE)
         arcade.draw_text("Press ESC to go back to menu", 50, HEIGHT - 70, arcade.color.WHITE)
-        arcade.draw_circle_filled(spaceship_x, spaceship_y, spaceship_radius, spaceship_color)
-
+        draw_spaceship(spaceship_x, spaceship_y)
 
 def on_key_press(key, modifiers):
     global current_screen, spaceship_x, spaceship_y, press_up, press_down, press_left, press_right
@@ -113,10 +110,20 @@ def on_key_release(key, modifiers):
 def on_mouse_press(x, y, button, modifiers):
     pass
 
-
+def draw_spaceship(spaceship_x, spaceship_y):
+    arcade.draw_circle_filled(spaceship_x + 15, spaceship_y + 52.5, 7.5, arcade.color.WHITE)
+    arcade.draw_circle_filled(spaceship_x + 15, spaceship_y + 6.5, 7.5, arcade.color.WHITE)
+    arcade.draw_circle_filled(spaceship_x - 15, spaceship_y + 6.5, 7.5, arcade.color.RED)
+    arcade.draw_circle_filled(spaceship_x - 15, spaceship_y + 52.5, 7.5, arcade.color.RED)
+    arcade.draw_rectangle_filled(spaceship_x, spaceship_y + 7, 30, 15, arcade.color.GRAY)
+    arcade.draw_rectangle_filled(spaceship_x, spaceship_y + 53, 30, 15, arcade.color.GRAY)
+    arcade.draw_triangle_filled(spaceship_x , spaceship_y, spaceship_x, spaceship_y + 60, spaceship_x + 90, spaceship_y + 30, arcade.color.GRAY)
+    arcade.draw_rectangle_filled(spaceship_x + 25, spaceship_y + 30, 30, 15, arcade.color.BLACK_OLIVE)
+    arcade.draw_circle_filled(spaceship_x + 40, spaceship_y + 29.5, 7.5, arcade.color.BLACK_OLIVE)
 
 if __name__ == '__main__':
     setup()
+
 
 
 
