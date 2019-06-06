@@ -4,6 +4,10 @@ WIDTH = 1360
 HEIGHT = 710
 
 current_screen = "menu"
+spaceship_x = HEIGHT / 2
+spaceship_y = 300
+spaceship_radius = 200
+spaceship_color = arcade.color.RED
 press_up = False
 press_down = False
 press_left = False
@@ -30,13 +34,12 @@ def update(delta_time):
 
     if press_up == True:
         spaceship_y += 10
-    if key == arcade.key.W:
-        if press_down == True:
-            spaceship_y -= 10
-        if press_left == True:
-            spaceship_x -= 10
-        if press_right == True:
-            spaceship_x += 10
+    if press_down == True:
+        spaceship_y -= 10
+    if press_left == True:
+        spaceship_x -= 10
+    if press_right == True:
+        spaceship_x += 10
 
 
 
@@ -82,25 +85,34 @@ def on_key_press(key, modifiers):
         if key == arcade.key.W:
             press_up = True
         if key == arcade.key.A:
-            press_down = True
-        if key == arcade.key.S:
             press_left = True
+        if key == arcade.key.S:
+            press_down = True
         if key == arcade.key.D:
             press_right = True
 
 
 def on_key_release(key, modifiers):
     global current_screen, spaceship_x, spaceship_y, press_up, press_down, press_left, press_right
-    if key == arcade.key.W:
-        up_pressed = False
+    if current_screen == "play":
+        if key == arcade.key.W:
+            press_up = False
+        if key == arcade.key.A:
+            press_left = False
+        if key == arcade.key.S:
+            press_down = False
+        if key == arcade.key.D:
+            press_right = False
+
 
 
 def on_mouse_press(x, y, button, modifiers):
     pass
 
-def draw_spaceship(x,y):
-    arcade.draw_triangle_filled(x , y, x , y + 30, x + 50 , y + 15, arcade.color.BLUE)
 
 
 if __name__ == '__main__':
     setup()
+
+
+
