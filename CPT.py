@@ -10,6 +10,9 @@ press_up = False
 press_down = False
 press_left = False
 press_right = False
+lives = 3
+healthbar_x = WIDTH - 210
+healthbar_y = HEIGHT - 50
 
 
 def setup():
@@ -30,7 +33,7 @@ def setup():
 def update(delta_time):
     global spaceship_y, spaceship_x, press_up, press_down, press_left, press_right
 
-    if spaceship_y <= HEIGHT - 100:
+    if spaceship_y <= HEIGHT - 150:
         if press_up == True:
             spaceship_y += 10
     if spaceship_y >= 50:
@@ -65,9 +68,18 @@ def on_draw():
         arcade.draw_text("Play Screen", 50, HEIGHT - 50, arcade.color.WHITE)
         arcade.draw_text("Press ESC to go back to menu", 50, HEIGHT - 70, arcade.color.WHITE)
         draw_spaceship(spaceship_x, spaceship_y)
+        arcade.draw_xywh_rectangle_filled(healthbar_x, healthbar_y, 200, 40, arcade.color.WHITE)
+        if lives == 3:
+            arcade.draw_xywh_rectangle_filled(healthbar_x, healthbar_y, 200, 40, arcade.color.GREEN)
+        elif lives == 2:
+            arcade.draw_xywh_rectangle_filled(healthbar_x, healthbar_y, 134, 40, arcade.color.YELLOW)
+        elif lives == 1:
+            arcade.draw_xywh_rectangle_filled(healthbar_x, healthbar_y, 67, 40, arcade.color.RED)
+
+
 
 def on_key_press(key, modifiers):
-    global current_screen, spaceship_x, spaceship_y, press_up, press_down, press_left, press_right
+    global current_screen, spaceship_x, spaceship_y, press_up, press_down, press_left, press_right, lives
     if current_screen == "menu":
         if key == arcade.key.I:
             current_screen = "instructions"
@@ -91,6 +103,8 @@ def on_key_press(key, modifiers):
             press_down = True
         if key == arcade.key.D:
             press_right = True
+        if key == arcade.key.P:
+            lives -= 1
 
 
 def on_key_release(key, modifiers):
