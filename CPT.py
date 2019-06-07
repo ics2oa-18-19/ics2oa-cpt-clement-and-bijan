@@ -1,7 +1,20 @@
 import arcade
+import random
 
 WIDTH = 1360
 HEIGHT = 710
+
+star_x_positions = []
+star_y_positions = []
+
+asteroid_x_positions_1 = []
+asteroid_y_positions_1 = []
+
+asteroid_x_positions_2 = []
+asteroid_y_positions_2 = []
+
+asteroid_x_positions_3 = []
+asteroid_y_positions_3 = []
 
 current_screen = "menu"
 spaceship_x = 355
@@ -14,6 +27,21 @@ lives = 3
 healthbar_x = WIDTH - 210
 healthbar_y = HEIGHT - 50
 
+for _ in range(15):
+    star_x_positions.append(random.randrange(0, WIDTH * 2))
+    star_y_positions.append(random.randrange(0, HEIGHT))
+
+for _ in range(3):
+    asteroid_x_positions_1.append(random.randrange(WIDTH * 2, WIDTH * 5))
+    asteroid_y_positions_1.append(random.randrange(0, HEIGHT))
+
+for _ in range(6):
+    asteroid_x_positions_2.append(random.randrange(WIDTH * 2, WIDTH * 4))
+    asteroid_y_positions_2.append(random.randrange(0, HEIGHT))
+
+for _ in range(12):
+    asteroid_x_positions_3.append(random.randrange(WIDTH * 2, WIDTH * 3))
+    asteroid_y_positions_3.append(random.randrange(0, HEIGHT))
 
 def setup():
     arcade.open_window(WIDTH, HEIGHT, "My Arcade Game")
@@ -31,30 +59,56 @@ def setup():
 
 
 def update(delta_time):
-    global spaceship_y, spaceship_x, press_up, press_down, press_left, press_right
+    global spaceship_y, spaceship_x, press_up, press_down, press_left, press_right, lives
 
-    if spaceship_y <= HEIGHT - 150:
+    if spaceship_y <= HEIGHT:
         if press_up == True:
             spaceship_y += 10
-    if spaceship_y >= 50:
+    if  spaceship_y >= 1:
         if press_down == True:
             spaceship_y -= 10
-    if spaceship_x >= 50:
+    if spaceship_x >= 1:
         if press_left == True:
             spaceship_x -= 10
-    if spaceship_x <= WIDTH - 100:
+    if spaceship_x <= WIDTH:
         if press_right == True:
             spaceship_x += 10
 
+    for index in range(len(star_x_positions)):
+        star_x_positions[index] -= 2
 
+        if star_x_positions[index] < 0:
+            star_x_positions[index] = WIDTH
+            star_y_positions[index] = random.randrange(0, HEIGHT)
+
+    for index in range(len(asteroid_x_positions_1)):
+        asteroid_x_positions_1[index] -= 3
+
+        if asteroid_x_positions_1[index] < 0:
+            asteroid_x_positions_1[index] = random.randrange(WIDTH, WIDTH * 2)
+            asteroid_y_positions_1[index] = random.randrange(0, HEIGHT)
+
+    for index in range(len(asteroid_x_positions_2)):
+        asteroid_x_positions_2[index] -= 6
+
+        if asteroid_x_positions_2[index] < 0:
+            asteroid_x_positions_2[index] = random.randrange(WIDTH, WIDTH * 2)
+            asteroid_y_positions_2[index] = random.randrange(0, HEIGHT)
+
+    for index in range(len(asteroid_x_positions_3)):
+        asteroid_x_positions_3[index] -= 10
+
+        if asteroid_x_positions_3[index] < 0:
+            asteroid_x_positions_3[index] = random.randrange(WIDTH, WIDTH * 2)
+            asteroid_y_positions_3[index] = random.randrange(0, HEIGHT)
 
 def on_draw():
     arcade.start_render()
     # Draw in here...
     if current_screen == "menu":
-        arcade.draw_text("Game", WIDTH / 2 , HEIGHT / 2, arcade.color.WHITE)
-        arcade.draw_text("Press I for instructions",  WIDTH / 2, HEIGHT / 2 - 20, arcade.color.WHITE)
-        arcade.draw_text("P to play",  WIDTH / 2, HEIGHT / 2- 40, arcade.color.WHITE)
+        arcade.draw_text("Game", 50, HEIGHT - 50, arcade.color.WHITE)
+        arcade.draw_text("Press I for instructions", 50, HEIGHT - 70, arcade.color.WHITE)
+        arcade.draw_text("P to play", 50, HEIGHT - 90, arcade.color.WHITE)
 
     elif current_screen == "instructions":
         arcade.draw_text("Instruction Screen", 50, HEIGHT - 50, arcade.color.WHITE)
@@ -65,9 +119,18 @@ def on_draw():
         arcade.draw_text("Press ESC to go back to menu", 50, HEIGHT - 150, arcade.color.WHITE)
 
     elif current_screen == "play":
-        arcade.draw_text("Play Screen", 50, HEIGHT - 50, arcade.color.WHITE)
-        arcade.draw_text("Press ESC to go back to menu", 50, HEIGHT - 70, arcade.color.WHITE)
+        for x, y in zip(star_x_positions, star_y_positions):
+            arcade.draw_circle_filled(x, y, 5, arcade.color.YELLOW)
+        for x, y in zip(asteroid_x_positions_1, asteroid_y_positions_1):
+            draw_asteroid_1(x, y)
+        for x, y in zip(asteroid_x_positions_2, asteroid_y_positions_2):
+            draw_asteroid_2(x, y)
+        for x, y in zip(asteroid_x_positions_3, asteroid_y_positions_3):
+            draw_asteroid_3(x, y)
+
+
         draw_spaceship(spaceship_x, spaceship_y)
+
         arcade.draw_xywh_rectangle_filled(healthbar_x, healthbar_y, 200, 40, arcade.color.WHITE)
         if lives == 3:
             arcade.draw_xywh_rectangle_filled(healthbar_x, healthbar_y, 200, 40, arcade.color.GREEN)
@@ -76,10 +139,12 @@ def on_draw():
         elif lives == 1:
             arcade.draw_xywh_rectangle_filled(healthbar_x, healthbar_y, 67, 40, arcade.color.RED)
 
+        arcade.draw_text("Play Screen", 50, HEIGHT - 50, arcade.color.WHITE)
+        arcade.draw_text("Press ESC to go back to menu", 50, HEIGHT - 70, arcade.color.WHITE)
 
 
 def on_key_press(key, modifiers):
-    global current_screen, spaceship_x, spaceship_y, press_up, press_down, press_left, press_right, lives
+    global current_screen, spaceship_x, spaceship_y, press_up, press_down, press_left, press_right
     if current_screen == "menu":
         if key == arcade.key.I:
             current_screen = "instructions"
@@ -135,9 +200,17 @@ def draw_spaceship(spaceship_x, spaceship_y):
     arcade.draw_rectangle_filled(spaceship_x + 25, spaceship_y + 30, 30, 15, arcade.color.BLACK_OLIVE)
     arcade.draw_circle_filled(spaceship_x + 40, spaceship_y + 29.5, 7.5, arcade.color.BLACK_OLIVE)
 
+def draw_asteroid_1(x, y):
+    arcade.draw_circle_filled(x, y, 70, arcade.color.BROWN)
+
+def draw_asteroid_2(x, y):
+    arcade.draw_circle_filled(x, y, 30, arcade.color.BROWN)
+
+def draw_asteroid_3(x, y):
+    arcade.draw_circle_filled(x, y, 15, arcade.color.BROWN)
+
 if __name__ == '__main__':
     setup()
-
 
 
 
