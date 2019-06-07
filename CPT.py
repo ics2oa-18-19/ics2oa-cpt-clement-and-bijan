@@ -30,16 +30,16 @@ def setup():
 def update(delta_time):
     global spaceship_y, spaceship_x, press_up, press_down, press_left, press_right
 
-    if spaceship_y <= HEIGHT:
+    if spaceship_y <= HEIGHT - 100:
         if press_up == True:
             spaceship_y += 10
-    if  spaceship_y >= 1:
+    if spaceship_y >= 50:
         if press_down == True:
             spaceship_y -= 10
-    if spaceship_x >= 1:
+    if spaceship_x >= 50:
         if press_left == True:
             spaceship_x -= 10
-    if spaceship_x <= WIDTH:
+    if spaceship_x <= WIDTH - 100:
         if press_right == True:
             spaceship_x += 10
 
@@ -49,9 +49,9 @@ def on_draw():
     arcade.start_render()
     # Draw in here...
     if current_screen == "menu":
-        arcade.draw_text("Game", 50, HEIGHT - 50, arcade.color.WHITE)
-        arcade.draw_text("Press I for instructions", 50, HEIGHT - 70, arcade.color.WHITE)
-        arcade.draw_text("P to play", 50, HEIGHT - 90, arcade.color.WHITE)
+        arcade.draw_text("Game", WIDTH / 2 , HEIGHT / 2, arcade.color.WHITE)
+        arcade.draw_text("Press I for instructions",  WIDTH / 2, HEIGHT / 2 - 20, arcade.color.WHITE)
+        arcade.draw_text("P to play",  WIDTH / 2, HEIGHT / 2- 40, arcade.color.WHITE)
 
     elif current_screen == "instructions":
         arcade.draw_text("Instruction Screen", 50, HEIGHT - 50, arcade.color.WHITE)
