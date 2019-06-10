@@ -74,33 +74,34 @@ def update(delta_time):
         if press_right == True:
             spaceship_x += 10
 
-    for index in range(len(star_x_positions)):
-        star_x_positions[index] -= 2
+    if current_screen == "play":
+        for index in range(len(star_x_positions)):
+            star_x_positions[index] -= 2
 
-        if star_x_positions[index] < 0:
-            star_x_positions[index] = WIDTH
-            star_y_positions[index] = random.randrange(0, HEIGHT)
+            if star_x_positions[index] < 0:
+                star_x_positions[index] = WIDTH
+                star_y_positions[index] = random.randrange(0, HEIGHT)
 
-    for index in range(len(asteroid_x_positions_1)):
-        asteroid_x_positions_1[index] -= 3
+        for index in range(len(asteroid_x_positions_1)):
+            asteroid_x_positions_1[index] -= 3
 
-        if asteroid_x_positions_1[index] < 0:
-            asteroid_x_positions_1[index] = random.randrange(WIDTH, WIDTH * 2)
-            asteroid_y_positions_1[index] = random.randrange(0, HEIGHT)
+            if asteroid_x_positions_1[index] < 0:
+                asteroid_x_positions_1[index] = random.randrange(WIDTH, WIDTH * 2)
+                asteroid_y_positions_1[index] = random.randrange(0, HEIGHT)
 
-    for index in range(len(asteroid_x_positions_2)):
-        asteroid_x_positions_2[index] -= 6
+        for index in range(len(asteroid_x_positions_2)):
+            asteroid_x_positions_2[index] -= 6
 
-        if asteroid_x_positions_2[index] < 0:
-            asteroid_x_positions_2[index] = random.randrange(WIDTH, WIDTH * 2)
-            asteroid_y_positions_2[index] = random.randrange(0, HEIGHT)
+            if asteroid_x_positions_2[index] < 0:
+                asteroid_x_positions_2[index] = random.randrange(WIDTH, WIDTH * 2)
+                asteroid_y_positions_2[index] = random.randrange(0, HEIGHT)
 
-    for index in range(len(asteroid_x_positions_3)):
-        asteroid_x_positions_3[index] -= 10
+        for index in range(len(asteroid_x_positions_3)):
+            asteroid_x_positions_3[index] -= 10
 
-        if asteroid_x_positions_3[index] < 0:
-            asteroid_x_positions_3[index] = random.randrange(WIDTH, WIDTH * 2)
-            asteroid_y_positions_3[index] = random.randrange(0, HEIGHT)
+            if asteroid_x_positions_3[index] < 0:
+                asteroid_x_positions_3[index] = random.randrange(WIDTH, WIDTH * 2)
+                asteroid_y_positions_3[index] = random.randrange(0, HEIGHT)
 
 def on_draw():
     arcade.start_render()
