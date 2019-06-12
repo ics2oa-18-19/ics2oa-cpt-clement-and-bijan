@@ -1,5 +1,6 @@
 import arcade
 import random
+import time
 
 WIDTH = 1360
 HEIGHT = 710
@@ -12,7 +13,6 @@ asteroid_y_positions_1 = []
 
 asteroid_x_positions_2 = []
 asteroid_y_positions_2 = []
-
 asteroid_x_positions_3 = []
 asteroid_y_positions_3 = []
 
@@ -26,6 +26,10 @@ press_right = False
 lives = 3
 healthbar_x = WIDTH - 210
 healthbar_y = HEIGHT - 50
+time_passed = 0
+
+
+
 
 for _ in range(15):
     star_x_positions.append(random.randrange(0, WIDTH * 2))
@@ -59,7 +63,7 @@ def setup():
 
 
 def update(delta_time):
-    global spaceship_y, spaceship_x, press_up, press_down, press_left, press_right, lives
+    global spaceship_y, spaceship_x, press_up, press_down, press_left, press_right, lives, time_passed
 
     if spaceship_y <= HEIGHT:
         if press_up == True:
@@ -103,21 +107,26 @@ def update(delta_time):
                 asteroid_x_positions_3[index] = random.randrange(WIDTH, WIDTH * 2)
                 asteroid_y_positions_3[index] = random.randrange(0, HEIGHT)
 
+        time.sleep(0.0001)
+        time_passed += 1
+
+
 def on_draw():
+    global time_passed
     arcade.start_render()
     # Draw in here...
     if current_screen == "menu":
-        arcade.draw_text("Game", 50, HEIGHT - 50, arcade.color.WHITE)
-        arcade.draw_text("Press I for instructions", 50, HEIGHT - 70, arcade.color.WHITE)
-        arcade.draw_text("P to play", 50, HEIGHT - 90, arcade.color.WHITE)
+        arcade.draw_text("Spaceships", WIDTH / 2 - 100, HEIGHT - 50, arcade.color.WHITE, 20)
+        arcade.draw_text("Press I for instructions", WIDTH / 2 - 100, HEIGHT / 2, arcade.color.WHITE, 20)
+        arcade.draw_text("P to play", WIDTH / 2 -100, HEIGHT / 2 - 50, arcade.color.WHITE, 20)
 
     elif current_screen == "instructions":
-        arcade.draw_text("Instruction Screen", 50, HEIGHT - 50, arcade.color.WHITE)
-        arcade.draw_text("W = up", 50, HEIGHT - 70, arcade.color.WHITE)
-        arcade.draw_text("A = left", 50, HEIGHT - 90, arcade.color.WHITE)
-        arcade.draw_text("S = down", 50, HEIGHT - 110, arcade.color.WHITE)
-        arcade.draw_text("D = right", 50, HEIGHT - 130, arcade.color.WHITE)
-        arcade.draw_text("Press ESC to go back to menu", 50, HEIGHT - 150, arcade.color.WHITE)
+        arcade.draw_text("Instruction Screen", WIDTH / 2 - 100, HEIGHT / 2 + 100, arcade.color.WHITE, 20)
+        arcade.draw_text("W = up", WIDTH / 2 -100, HEIGHT / 2 + 10, arcade.color.WHITE,20)
+        arcade.draw_text("A = left", WIDTH / 2 -100, HEIGHT / 2 - 30, arcade.color.WHITE,20)
+        arcade.draw_text("S = down", WIDTH / 2 -100, HEIGHT / 2 - 70, arcade.color.WHITE,20)
+        arcade.draw_text("D = right", WIDTH / 2 -100, HEIGHT / 2 - 110, arcade.color.WHITE, 20)
+        arcade.draw_text("Press ESC to go back to menu", WIDTH / 2 - 100, HEIGHT / 2 - 150, arcade.color.WHITE, 20)
 
     elif current_screen == "play":
         for x, y in zip(star_x_positions, star_y_positions):
@@ -128,7 +137,6 @@ def on_draw():
             draw_asteroid_2(x, y)
         for x, y in zip(asteroid_x_positions_3, asteroid_y_positions_3):
             draw_asteroid_3(x, y)
-
 
         draw_spaceship(spaceship_x, spaceship_y)
 
@@ -141,11 +149,16 @@ def on_draw():
             arcade.draw_xywh_rectangle_filled(healthbar_x, healthbar_y, 67, 40, arcade.color.RED)
 
         arcade.draw_text("Play Screen", 50, HEIGHT - 50, arcade.color.WHITE)
+
         arcade.draw_text("Press ESC to go back to menu", 50, HEIGHT - 70, arcade.color.WHITE)
 
+        arcade.draw_text(f"Score:{time_passed}", WIDTH - 350, HEIGHT - 35, arcade.color.WHITE)
+
+    elif current_screen == "game over":
+        arcade.draw_text("Press Space to go back to Menu", WIDTH / 2 - 100, HEIGHT / 2, arcade.color.WHITE, 20)
 
 def on_key_press(key, modifiers):
-    global current_screen, spaceship_x, spaceship_y, press_up, press_down, press_left, press_right
+    global current_screen, spaceship_x, spaceship_y, press_up, press_down, press_left, press_right, lives
     if current_screen == "menu":
         if key == arcade.key.I:
             current_screen = "instructions"
@@ -171,6 +184,9 @@ def on_key_press(key, modifiers):
             press_right = True
         if key == arcade.key.P:
             lives -= 1
+
+    if lives == 0:
+        current_screen = "game_over"
 
 
 def on_key_release(key, modifiers):
