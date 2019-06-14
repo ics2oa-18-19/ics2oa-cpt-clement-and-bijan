@@ -13,6 +13,7 @@ asteroid_y_positions_1 = []
 
 asteroid_x_positions_2 = []
 asteroid_y_positions_2 = []
+
 asteroid_x_positions_3 = []
 asteroid_y_positions_3 = []
 
@@ -112,7 +113,7 @@ def update(delta_time):
 
 
 def on_draw():
-    global time_passed
+    global time_passed, lives, spaceship_x, spaceship_y
     arcade.start_render()
     # Draw in here...
     if current_screen == "menu":
@@ -154,8 +155,14 @@ def on_draw():
 
         arcade.draw_text(f"Score:{time_passed}", WIDTH - 350, HEIGHT - 35, arcade.color.WHITE)
 
-    elif current_screen == "game over":
+    elif current_screen == "game_over":
         arcade.draw_text("Press Space to go back to Menu", WIDTH / 2 - 100, HEIGHT / 2, arcade.color.WHITE, 20)
+        lives = 3
+        spaceship_x = 355
+        spaceship_y = 100
+        time_passed = 0
+
+
 
 def on_key_press(key, modifiers):
     global current_screen, spaceship_x, spaceship_y, press_up, press_down, press_left, press_right, lives
@@ -188,6 +195,9 @@ def on_key_press(key, modifiers):
     if lives == 0:
         current_screen = "game_over"
 
+    elif current_screen == "game_over":
+        if key == arcade.key.SPACE:
+            current_screen = "menu"
 
 def on_key_release(key, modifiers):
     global current_screen, spaceship_x, spaceship_y, press_up, press_down, press_left, press_right
