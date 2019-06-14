@@ -166,7 +166,7 @@ def on_draw():
         spaceship_x = 355
         spaceship_y = 100
         time_passed = 0
-        asteroid_x_positions_1 = []
+       
      
 
 def on_key_press(key, modifiers):
