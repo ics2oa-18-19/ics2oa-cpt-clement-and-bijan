@@ -1,6 +1,5 @@
 import arcade
 import random
-import time
 import math
 
 WIDTH = 1360
