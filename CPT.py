@@ -29,9 +29,6 @@ healthbar_x = WIDTH - 210
 healthbar_y = HEIGHT - 50
 time_passed = 0
 
-
-
-
 for _ in range(15):
     star_x_positions.append(random.randrange(0, WIDTH * 2))
     star_y_positions.append(random.randrange(0, HEIGHT))
@@ -47,6 +44,7 @@ for _ in range(6):
 for _ in range(12):
     asteroid_x_positions_3.append(random.randrange(WIDTH * 2, WIDTH * 3))
     asteroid_y_positions_3.append(random.randrange(0, HEIGHT))
+
 
 def setup():
     arcade.open_window(WIDTH, HEIGHT, "My Arcade Game")
@@ -80,6 +78,7 @@ def update(delta_time):
             spaceship_x += 10
 
     if current_screen == "play":
+
         for index in range(len(star_x_positions)):
             star_x_positions[index] -= 2
 
@@ -113,13 +112,19 @@ def update(delta_time):
 
 
 def on_draw():
-    global time_passed, lives, spaceship_x, spaceship_y
+    global time_passed, lives, spaceship_x, spaceship_y, asteroid_x_positions_1, asteroid_y_positions_1, \
+        asteroid_x_positions_2, asteroid_y_positions_2, asteroid_x_positions_3, asteroid_y_positions_3
     arcade.start_render()
     # Draw in here...
     if current_screen == "menu":
-        arcade.draw_text("Spaceships", WIDTH / 2 - 100, HEIGHT - 50, arcade.color.WHITE, 20)
-        arcade.draw_text("Press I for instructions", WIDTH / 2 - 100, HEIGHT / 2, arcade.color.WHITE, 20)
-        arcade.draw_text("P to play", WIDTH / 2 -100, HEIGHT / 2 - 50, arcade.color.WHITE, 20)
+        arcade.draw_text("Spaceships", WIDTH / 2 - 110, HEIGHT - 100, arcade.color.WHITE, 20)
+        arcade.draw_text("Press I for instructions", WIDTH / 2 - 110, HEIGHT / 2 + 100, arcade.color.WHITE, 20)
+        arcade.draw_text("P to play", WIDTH / 2 -100, HEIGHT / 2 + 50, arcade.color.WHITE, 20)
+        arcade.draw_text("Your spaceship has gotten caught in an asteroid belt on the way home. Your team has turned"
+                     " on the field field but it is at low power.", WIDTH / 2 - 110, HEIGHT / 2 -50 , arcade.color.WHITE,
+                         10, 300,)
+        arcade.draw_text("DON'T LET THE FORCE FIELD BE HIT 3 OR MORE TIMES OR YOU'LL NEVER GET BACK HOME!", WIDTH / 2 -
+                         110, HEIGHT / 2 - 125, arcade.color.WHITE, 15, 300)
 
     elif current_screen == "instructions":
         arcade.draw_text("Instruction Screen", WIDTH / 2 - 100, HEIGHT / 2 + 100, arcade.color.WHITE, 20)
@@ -161,6 +166,12 @@ def on_draw():
         spaceship_x = 355
         spaceship_y = 100
         time_passed = 0
+        asteroid_x_positions_1 = []
+        asteroid_y_positions_1 = []
+        asteroid_x_positions_2 = []
+        asteroid_y_positions_2 = []
+        asteroid_x_positions_3 = []
+        asteroid_y_positions_3 = []
 
 
 
