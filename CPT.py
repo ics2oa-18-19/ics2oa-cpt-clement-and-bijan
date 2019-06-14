@@ -49,7 +49,7 @@ for _ in range(12):
 def setup():
     arcade.open_window(WIDTH, HEIGHT, "My Arcade Game")
     arcade.set_background_color(arcade.color.BLACK)
-    arcade.schedule(update, 1/60)
+    arcade.schedule(update, 1 / 60)
 
     # Override arcade window methods
     window = arcade.get_window()
@@ -67,7 +67,7 @@ def update(delta_time):
     if spaceship_y <= HEIGHT:
         if press_up == True:
             spaceship_y += 10
-    if  spaceship_y >= 1:
+    if spaceship_y >= 1:
         if press_down == True:
             spaceship_y -= 10
     if spaceship_x >= 1:
@@ -119,19 +119,20 @@ def on_draw():
     if current_screen == "menu":
         arcade.draw_text("Spaceships", WIDTH / 2 - 110, HEIGHT - 100, arcade.color.WHITE, 20)
         arcade.draw_text("Press I for instructions", WIDTH / 2 - 110, HEIGHT / 2 + 100, arcade.color.WHITE, 20)
-        arcade.draw_text("P to play", WIDTH / 2 -100, HEIGHT / 2 + 50, arcade.color.WHITE, 20)
+        arcade.draw_text("P to play", WIDTH / 2 - 100, HEIGHT / 2 + 50, arcade.color.WHITE, 20)
         arcade.draw_text("Your spaceship has gotten caught in an asteroid belt on the way home. Your team has turned"
-                     " on the field field but it is at low power.", WIDTH / 2 - 110, HEIGHT / 2 -50 , arcade.color.WHITE,
-                         10, 300,)
+                         " on the field field but it is at low power.", WIDTH / 2 - 110, HEIGHT / 2 - 50,
+                         arcade.color.WHITE,
+                         10, 300, )
         arcade.draw_text("DON'T LET THE FORCE FIELD BE HIT 3 OR MORE TIMES OR YOU'LL NEVER GET BACK HOME!", WIDTH / 2 -
                          110, HEIGHT / 2 - 125, arcade.color.WHITE, 15, 300)
 
     elif current_screen == "instructions":
         arcade.draw_text("Instruction Screen", WIDTH / 2 - 100, HEIGHT / 2 + 100, arcade.color.WHITE, 20)
-        arcade.draw_text("W = up", WIDTH / 2 -100, HEIGHT / 2 + 10, arcade.color.WHITE,20)
-        arcade.draw_text("A = left", WIDTH / 2 -100, HEIGHT / 2 - 30, arcade.color.WHITE,20)
-        arcade.draw_text("S = down", WIDTH / 2 -100, HEIGHT / 2 - 70, arcade.color.WHITE,20)
-        arcade.draw_text("D = right", WIDTH / 2 -100, HEIGHT / 2 - 110, arcade.color.WHITE, 20)
+        arcade.draw_text("W = up", WIDTH / 2 - 100, HEIGHT / 2 + 10, arcade.color.WHITE, 20)
+        arcade.draw_text("A = left", WIDTH / 2 - 100, HEIGHT / 2 - 30, arcade.color.WHITE, 20)
+        arcade.draw_text("S = down", WIDTH / 2 - 100, HEIGHT / 2 - 70, arcade.color.WHITE, 20)
+        arcade.draw_text("D = right", WIDTH / 2 - 100, HEIGHT / 2 - 110, arcade.color.WHITE, 20)
         arcade.draw_text("Press ESC to go back to menu", WIDTH / 2 - 100, HEIGHT / 2 - 150, arcade.color.WHITE, 20)
 
     elif current_screen == "play":
@@ -166,8 +167,28 @@ def on_draw():
         spaceship_x = 355
         spaceship_y = 100
         time_passed = 0
-       
-     
+
+        asteroid_x_positions_1 = []
+        asteroid_y_positions_1 = []
+
+        asteroid_x_positions_2 = []
+        asteroid_y_positions_2 = []
+
+        asteroid_x_positions_3 = []
+        asteroid_y_positions_3 = []
+
+        for _ in range(3):
+            asteroid_x_positions_1.append(random.randrange(WIDTH * 2, WIDTH * 5))
+            asteroid_y_positions_1.append(random.randrange(0, HEIGHT))
+
+        for _ in range(6):
+            asteroid_x_positions_2.append(random.randrange(WIDTH * 2, WIDTH * 4))
+            asteroid_y_positions_2.append(random.randrange(0, HEIGHT))
+
+        for _ in range(12):
+            asteroid_x_positions_3.append(random.randrange(WIDTH * 2, WIDTH * 3))
+            asteroid_y_positions_3.append(random.randrange(0, HEIGHT))
+
 
 def on_key_press(key, modifiers):
     global current_screen, spaceship_x, spaceship_y, press_up, press_down, press_left, press_right, lives
@@ -204,6 +225,7 @@ def on_key_press(key, modifiers):
         if key == arcade.key.SPACE:
             current_screen = "menu"
 
+
 def on_key_release(key, modifiers):
     global current_screen, spaceship_x, spaceship_y, press_up, press_down, press_left, press_right
     if current_screen == "play":
@@ -217,9 +239,9 @@ def on_key_release(key, modifiers):
             press_right = False
 
 
-
 def on_mouse_press(x, y, button, modifiers):
     pass
+
 
 def draw_spaceship(spaceship_x, spaceship_y):
     arcade.draw_circle_filled(spaceship_x + 15, spaceship_y + 52.5, 7.5, arcade.color.WHITE)
@@ -228,18 +250,23 @@ def draw_spaceship(spaceship_x, spaceship_y):
     arcade.draw_circle_filled(spaceship_x - 15, spaceship_y + 52.5, 7.5, arcade.color.RED)
     arcade.draw_rectangle_filled(spaceship_x, spaceship_y + 7, 30, 15, arcade.color.GRAY)
     arcade.draw_rectangle_filled(spaceship_x, spaceship_y + 53, 30, 15, arcade.color.GRAY)
-    arcade.draw_triangle_filled(spaceship_x , spaceship_y, spaceship_x, spaceship_y + 60, spaceship_x + 90, spaceship_y + 30, arcade.color.GRAY)
+    arcade.draw_triangle_filled(spaceship_x, spaceship_y, spaceship_x, spaceship_y + 60, spaceship_x + 90,
+                                spaceship_y + 30, arcade.color.GRAY)
     arcade.draw_rectangle_filled(spaceship_x + 25, spaceship_y + 30, 30, 15, arcade.color.BLACK_OLIVE)
     arcade.draw_circle_filled(spaceship_x + 40, spaceship_y + 29.5, 7.5, arcade.color.BLACK_OLIVE)
+
 
 def draw_asteroid_1(x, y):
     arcade.draw_circle_filled(x, y, 70, arcade.color.BROWN)
 
+
 def draw_asteroid_2(x, y):
     arcade.draw_circle_filled(x, y, 30, arcade.color.BROWN)
 
+
 def draw_asteroid_3(x, y):
     arcade.draw_circle_filled(x, y, 15, arcade.color.BROWN)
+
 
 if __name__ == '__main__':
     setup()
