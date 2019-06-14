@@ -167,13 +167,7 @@ def on_draw():
         spaceship_y = 100
         time_passed = 0
         asteroid_x_positions_1 = []
-        asteroid_y_positions_1 = []
-        asteroid_x_positions_2 = []
-        asteroid_y_positions_2 = []
-        asteroid_x_positions_3 = []
-        asteroid_y_positions_3 = []
-
-
+     
 
 def on_key_press(key, modifiers):
     global current_screen, spaceship_x, spaceship_y, press_up, press_down, press_left, press_right, lives
