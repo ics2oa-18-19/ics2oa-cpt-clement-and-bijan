@@ -31,7 +31,7 @@ healthbar_y = HEIGHT - 50
 time_passed = 0
 
 
-#Spawn location and amount of stars or asteroids
+#Spawn location and amount of stars and asteroids
 for _ in range(15):
     star_x_positions.append(random.randrange(0, WIDTH * 2))
     star_y_positions.append(random.randrange(0, HEIGHT))
